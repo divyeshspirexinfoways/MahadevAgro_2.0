@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const OurCoreValues = () => {
+    const [isMobile, setIsMobile] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const values = [
         { id: "01", title: "Innovation", desc: "Pushing boundaries in agricultural tech.", img: "https://i.pinimg.com/736x/b6/10/cb/b610cb8e86a9e4310c543f30b16c0fb5.jpg" },
         { id: "02", title: "Quality", desc: "Uncompromising standards in every product.", img: "https://i.pinimg.com/736x/6c/cf/87/6ccf873cb76d7a5e6651271758e7ce81.jpg" },
@@ -11,8 +22,20 @@ const OurCoreValues = () => {
         { id: "06", title: "Global Reach", desc: "Connecting farmers across continents.", img: "https://i.pinimg.com/736x/6b/1f/d8/6b1fd894ccf2d3a7fe2cf1ef58939274.jpg" },
     ];
 
-    // Double the array for seamless infinite sliding
-    const repeatedValues = [...values, ...values];
+    // Double the array for seamless infinite sliding on desktop
+    const repeatedValues = isMobile ? values : [...values, ...values];
+
+    const handleNext = () => {
+        if (currentIndex < values.length - 1) {
+            setCurrentIndex(prev => prev + 1);
+        }
+    };
+
+    const handlePrev = () => {
+        if (currentIndex > 0) {
+            setCurrentIndex(prev => prev - 1);
+        }
+    };
 
     return (
         <section className="py-20 bg-white overflow-hidden">
@@ -38,13 +61,13 @@ const OurCoreValues = () => {
             {/* Slider Container */}
             <div className="relative flex">
                 <motion.div 
-                    className="flex gap-8 whitespace-nowrap"
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{
-                        duration: 40,
-                        repeat: Infinity,
-                        ease: "linear",
-                    }}
+                    className="flex gap-8 whitespace-nowrap lg:pl-6"
+                    animate={isMobile ? { x: `-${currentIndex * (320 + 32)}px` } : { x: ["0%", "-50%"] }}
+                    transition={
+                        isMobile 
+                        ? { type: "tween", ease: "easeInOut", duration: 0.5 }
+                        : { duration: 40, repeat: Infinity, ease: "linear" }
+                    }
                 >
                     {repeatedValues.map((val, index) => (
                         <div 
@@ -84,6 +107,26 @@ const OurCoreValues = () => {
                     ))}
                 </motion.div>
             </div>
+
+            {/* Mobile Navigation Buttons */}
+            {isMobile && (
+                <div className="flex justify-center items-center gap-4 mt-12 md:hidden">
+                    <button 
+                        onClick={handlePrev} 
+                        disabled={currentIndex === 0}
+                        className={`p-3 rounded-full transition-all duration-300 ${currentIndex === 0 ? 'text-gray-300 bg-gray-50' : 'text-gray-900 bg-gray-100 hover:bg-gray-200'}`}
+                    >
+                        <ArrowLeft strokeWidth={1.5} size={24} />
+                    </button>
+                    <button 
+                        onClick={handleNext}
+                        disabled={currentIndex === values.length - 1}
+                        className={`p-3 rounded-full transition-all duration-300 ${currentIndex === values.length - 1 ? 'text-gray-300 bg-gray-50' : 'text-gray-900 bg-gray-100 hover:bg-gray-200'}`}
+                    >
+                        <ArrowRight strokeWidth={1.5} size={24} />
+                    </button>
+                </div>
+            )}
         </section>
     );
 };

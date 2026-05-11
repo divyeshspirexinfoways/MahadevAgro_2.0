@@ -1,7 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Products', path: '/products' },
+    { name: 'About Us', path: '/about' },
+    { name: 'Gallery', path: '/gallery' },
+    { name: 'Contact', path: '/contact' },
+  ];
+
   return (
     <footer className="outfit bg-neutral-50 text-neutral-900 py-20 px-6 md:px-12 lg:px-24 overflow-hidden border-t border-neutral-100">
       {/* Top Section */}
@@ -31,11 +40,11 @@ const Footer = () => {
         <div>
           <h4 className="text-neutral-400 text-md font-bold mb-6">Explore</h4>
           <ul className="space-y-4">
-            {['Home', 'Products', 'About Us', 'Gallery', 'Contact'].map((item) => (
-              <li key={item}>
-                <a href={`/${item.toLowerCase().replace(' ', '')}`} className="text-neutral-500 hover:text-neutral-900 transition-colors duration-300 forum text-lg">
-                  {item}
-                </a>
+            {navLinks.map((item) => (
+              <li key={item.name}>
+                <Link to={item.path} className="text-neutral-500 hover:text-neutral-900 transition-colors duration-300 forum text-lg">
+                  {item.name}
+                </Link>
               </li>
             ))}
           </ul>

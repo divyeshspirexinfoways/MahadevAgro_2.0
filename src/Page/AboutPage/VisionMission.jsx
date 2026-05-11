@@ -46,7 +46,7 @@ const VisionMission = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h2 className="text-4xl lg:text-6xl font-bold tracking-tight mb-8 leading-[1.1] text-neutral-900">
+            <h2 className="text-5xl sm:text-6xl lg:text-[3rem] xl:text-[4rem] 2xl:text-[5.5rem] font-bold tracking-tight mb-4 leading-[1.1] text-neutral-900">
               Our <br />
               <span className="flex items-center gap-6 mt-2">
                  <span className="inline-block w-8 lg:w-12 h-1 lg:h-1.5 bg-neutral-900"></span> Vision
@@ -96,7 +96,7 @@ const VisionMission = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h2 className="text-4xl lg:text-6xl font-bold tracking-tight mb-8 leading-[1.1] text-neutral-900">
+            <h2 className="text-5xl sm:text-6xl lg:text-[3rem] xl:text-[4rem] 2xl:text-[5.5rem] font-bold tracking-tight mb-4 leading-[1.1] text-neutral-900">
               Our <br />
               <span className="flex items-center gap-6 mt-2">
                  <span className="inline-block w-8 lg:w-12 h-1 lg:h-1.5 bg-neutral-900"></span> Mission

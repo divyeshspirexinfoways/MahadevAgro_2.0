@@ -1,31 +1,38 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/HomeImg/brandlogo.png'
 import LanguageSelector from '../common/LanguageSelector';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navLinks = ['Home', 'About Us', 'Products', 'Gallery', 'Contact'];
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'About Us', path: '/about' },
+    { name: 'Products', path: '/products' },
+    { name: 'Gallery', path: '/gallery' },
+    { name: 'Contact', path: '/contact' }
+  ];
 
   return (
     <>
       <header className="absolute top-0 left-0 w-full z-50 px-6 py-4 lg:px-16 flex items-center justify-between border-b border-white/10">
         {/* Left Side: Logo */}
-        <div className="flex items-center gap-2 cursor-pointer">
+        <Link to="/" className="flex items-center gap-2 cursor-pointer">
           <img src={logo} alt="Mahadev Agro" className='w-20'/>
-        </div>
+        </Link>
 
         {/* Center: Navlinks */}
         <nav className="hidden lg:flex items-center gap-10">
           {navLinks.map((link) => (
-            <a 
-              key={link} 
-              href={`#${link.toLowerCase().replace(' ', '-')}`} 
+            <Link 
+              key={link.name} 
+              to={link.path} 
               className="text-white text-sm font-medium tracking-widest hover:text-gray-300 transition-colors uppercase"
             >
-              {link}
-            </a>
+              {link.name}
+            </Link>
           ))}
         </nav>
 
@@ -75,14 +82,14 @@ const Header = () => {
               
               <nav className="flex flex-col gap-8 mt-4">
                 {navLinks.map((link) => (
-                  <a 
-                    key={link} 
-                    href={`#${link.toLowerCase().replace(' ', '-')}`} 
+                  <Link 
+                    key={link.name} 
+                    to={link.path} 
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="text-gray-200 text-xl font-medium tracking-wider hover:text-white transition-colors uppercase"
                   >
-                    {link}
-                  </a>
+                    {link.name}
+                  </Link>
                 ))}
               </nav>
             </motion.div>
